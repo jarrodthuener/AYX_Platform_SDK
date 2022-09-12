@@ -1,13 +1,14 @@
 # AYX_Platform_SDK
 
-<install prerequisites>
+## install prerequisites
 	Designer 2021.4+
 	Python 3.8.5
 		pip is included
 	node version 12+
 	git
-
-Create a folder structure somewhere:
+	
+## Setup folders for environments / workspace
+### Create a folder structure somewhere:
 	** might want to keep workspaces contained within each environment
 PlatformSDK
 	yourFirstEnvironment_venv
@@ -18,17 +19,10 @@ PlatformSDK
 		workspace1
 		workspace2
 
-OR - I think i like the folder structure above better - that way the workspaces are saved with the venvs
-PlatformSDK
-	Environments
-		venv_1_0_2
-	workspaces
-		SampleWorkspace
-
-open cmd utility (powershell and terminal didn't work for me)
+### open cmd utility (powershell and terminal didn't work for me)
 windows button -> cmd
 
-set path:
+### set path:
 C:\Program Files\Alteryx\bin\Miniconda3
 
 
@@ -36,55 +30,55 @@ C:\Program Files\Alteryx\bin\Miniconda3
 	python -m venv [your full path to the environment you want to create]
 	python -m venv C:\PlatformSDK\venv_1_0_2
 
-CD to venv Directory
+### CD to venv Directory
 	CD C:\PlatformSDK\venv_1_0_2
 	
-Activate
+### Activate
 	.\scripts\activate
 
-environment takes the name of the folder and will appear in parenthesis
+	environment takes the name of the folder and will appear in parenthesis
 
-**current directory = C:\PlatformSDK\venv_1_0_2**
+	**current directory = C:\PlatformSDK\venv_1_0_2**
 
-<Start SDK Quickstart>
+## Start SDK Quickstart
 
-
-<install CLI>
+### install CLI
 	pip install ayx-plugin-cli
 
-test CLI 
+### test CLI 
 	ayx_plugin_cli version
 		** note the dashes become underscores
 
 
 
-<install AYX Python SDK>
+### install AYX Python SDK
 	scripts\pip install ayx-python-sdk
 	
 everything above is for setting up venv and CLIs (command line interface)
 
-
-<create and enter workspace folder>
+## Create workspace
+create and enter workspace folder
 	mkdir ayx_py_sample
 	cd ayx_py_sample
 
-<create a workspace>
+### create a workspace
 	ayx_plugin_cli sdk-workspace-init
 
 https://alteryx.github.io/ayx-python-sdk/getting_started.html#create-the-ayx-plugin-workspace
 
 
-<create custom tool or plugin>
+### create custom tool or plugin
 	ayx_plugin_cli create-ayx-plugin
 		Tool Name: Sample Tool
 		Tool Type: single-input-single-output
 		Description: Sample Python Tool
 		Tool Version: 1.0
 
-navigate to ui\{tool name folder}\src
+### navigate to ui\{tool name folder}\src
 the index.tsx file will contain all of the elements for the front end UI
 you'll want to add a few pieces to the file which we'll use later:
 
+### how to handle the data pipeline on the backend
 generateData will breakdown the metadata so that it is visible to the front end elements
   const generateData = (data) => {
     // If the data isn't filled in, then use these default properties.
@@ -101,7 +95,7 @@ generateData will breakdown the metadata so that it is visible to the front end 
       return item 
     });
 
-
+### how to handle the compenent data.
 The handleFieldSelect function takes the values from the front end and inserts them into the configuration model
   const handleFieldSelect = (key) => (_, newValue) => {
     const newModel = { ...model };
