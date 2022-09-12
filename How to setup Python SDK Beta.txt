@@ -1,0 +1,149 @@
+
+<install prerequisites>
+	Designer 2021.4+
+	Python 3.8.5
+		pip is included
+	node version 12+
+	git
+
+Create a folder structure somewhere:
+	** might want to keep workspaces contained within each environment
+PlatformSDK
+	yourFirstEnvironment_venv
+		workspace1
+		workspace2
+		workspace3
+	secondEnvironment_venv
+		workspace1
+		workspace2
+
+OR - I think i like the folder structure above better - that way the workspaces are saved with the venvs
+PlatformSDK
+	Environments
+		venv_1_0_2
+	workspaces
+		SampleWorkspace
+
+open cmd utility (powershell and terminal didn't work for me)
+windows button -> cmd
+
+set path:
+C:\Program Files\Alteryx\bin\Miniconda3
+
+
+<Create Virtual Environment>
+	python -m venv [your full path to the environment you want to create]
+	python -m venv C:\PlatformSDK\venv_1_0_2
+
+CD to venv Directory
+	CD C:\PlatformSDK\venv_1_0_2
+	
+Activate
+	.\scripts\activate
+
+environment takes the name of the folder and will appear in parenthesis
+
+**current directory = C:\PlatformSDK\venv_1_0_2**
+
+<Start SDK Quickstart>
+
+
+<install CLI>
+	pip install ayx-plugin-cli
+
+test CLI 
+	ayx_plugin_cli version
+		** note the dashes become underscores
+
+
+
+<install AYX Python SDK>
+	scripts\pip install ayx-python-sdk
+	
+everything above is for setting up venv and CLIs (command line interface)
+
+
+<create and enter workspace folder>
+	mkdir ayx_py_sample
+	cd ayx_py_sample
+
+<create a workspace>
+	ayx_plugin_cli sdk-workspace-init
+
+https://alteryx.github.io/ayx-python-sdk/getting_started.html#create-the-ayx-plugin-workspace
+
+
+<create custom tool or plugin>
+	ayx_plugin_cli create-ayx-plugin
+		Tool Name: Sample Tool
+		Tool Type: single-input-single-output
+		Description: Sample Python Tool
+		Tool Version: 1.0
+
+navigate to ui\{tool name folder}\src
+the index.tsx file will contain all of the elements for the front end UI
+you'll want to add a few pieces to the file which we'll use later:
+
+generateData will breakdown the metadata so that it is visible to the front end elements
+  const generateData = (data) => {
+    // If the data isn't filled in, then use these default properties.
+    console.log({data})
+    if (JSON.stringify(data)=="{}" || !data) {
+      return ([]); //create a simple lookup table for "missing data" value
+    } else { 
+
+    // original Data without an if function Beginning - this is where the original generateDate function started
+    // This maps all "items" in the fields section of the incoming model (See model example at the bottom)
+    return data?.fields[0][0].fields.map((item) => {      
+      item.primary = item.name;
+      item.value = item.name;
+      return item 
+    });
+
+
+The handleFieldSelect function takes the values from the front end and inserts them into the configuration model
+  const handleFieldSelect = (key) => (_, newValue) => {
+    const newModel = { ...model };
+    const { Configuration } = newModel;
+    console.log('handleFieldSelect', { newValue, fieldToEdit: Configuration[key], key })
+    Configuration[key] = newValue;
+    handleUpdateModel(newModel);
+  };
+
+
+
+Default values at the bottom:
+    <DesignerApi messages={{}}defaultConfig={
+      { 
+        Configuration: { fieldSelect: []}, //need a sample value for our fieldSelect above so when we first open the tool it doesn't error.
+        Meta: { }
+      }
+    }>
+
+
+
+Then to handle these values in the backend you navigate to the .py file in the 
+C:\PlatformSDK\Workspaces\ayx_py_sample\backend\ayx_plugins\sample_multi_field_input.py
+On_record_batch section:
+		# convert pyarrow table into pandas DF
+        inputdf = pa.Table.to_pandas(batch)
+        
+		
+        def DateTimeClean(value):
+            try: 
+                return parse(value, fuzzy=True)
+            except: 
+                return '1999-12-31 23:59:59'
+    
+		# self.provider.tool_config[KEY] is how to access the metadata from the front end comms.
+        fieldSelect = self.provider.tool_config['fieldSelect']
+
+        inputdf['DateTime_Out'] = inputdf[fieldSelect].apply(lambda row: 
+                                     DateTimeClean(row))
+        
+        # convert dataframe back to pyarrow table
+        batch = pa.Table.from_pandas(inputdf)
+        self.provider.write_to_anchor("Output", batch)
+		
+logs for the tool when installed as user are here:
+	C:\Users\jarro\AppData\Local\Alteryx
