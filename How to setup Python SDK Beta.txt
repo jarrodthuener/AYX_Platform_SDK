@@ -45,7 +45,7 @@ environment takes the name of the folder and will appear in parenthesis
 **current directory = C:\PlatformSDK\venv_1_0_2**
 
 <Start SDK Quickstart>
-** when installing the ayx-plugin-cli, make sure the ayx
+** when installing the ayx-plugin-cli, make sure the environment above is activated
 
 <install CLI>
 	pip install ayx-plugin-cli
