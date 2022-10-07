@@ -2,8 +2,12 @@
 <install prerequisites>
 	Designer 2021.4+
 	Python 3.8.5
+		https://www.python.org/downloads/release/python-385/
+		Default install settings
 		pip is included
 	node version 12+
+		https://nodejs.org/en/download/
+		default install settings
 	git
 
 Create a folder structure somewhere:
@@ -18,18 +22,13 @@ PlatformSDK
 		workspace2
 
 OR - I think i like the folder structure above better - that way the workspaces are saved with the venvs
-PlatformSDK
-	Environments
-		venv_1_0_2
-	workspaces
-		SampleWorkspace
 
 open cmd utility (powershell and terminal didn't work for me)
 windows button -> cmd
 
 set path:
 C:\Program Files\Alteryx\bin\Miniconda3
-
+	** you must use this version of python in order to create the correct venv.
 
 <Create Virtual Environment>
 	python -m venv [your full path to the environment you want to create]
@@ -46,7 +45,7 @@ environment takes the name of the folder and will appear in parenthesis
 **current directory = C:\PlatformSDK\venv_1_0_2**
 
 <Start SDK Quickstart>
-
+** when installing the ayx-plugin-cli, make sure the ayx
 
 <install CLI>
 	pip install ayx-plugin-cli
