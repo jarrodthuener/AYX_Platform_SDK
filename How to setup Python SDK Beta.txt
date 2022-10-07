@@ -21,7 +21,7 @@ PlatformSDK
 		workspace1
 		workspace2
 
-OR - I think i like the folder structure above better - that way the workspaces are saved with the venvs
+This way the workspaces are saved with the venvs
 
 open cmd utility (powershell and terminal didn't work for me)
 windows button -> cmd
