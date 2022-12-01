@@ -10,14 +10,14 @@
 ## Setup folders for environments / workspace
 ### Create a folder structure somewhere:
 	** might want to keep workspaces contained within each environment
-PlatformSDK
-	yourFirstEnvironment_venv
-		workspace1
-		workspace2
-		workspace3
-	secondEnvironment_venv
-		workspace1
-		workspace2
+	PlatformSDK
+		yourFirstEnvironment_venv
+			workspace1
+			workspace2
+			workspace3
+		secondEnvironment_venv
+			workspace1
+			workspace2
 
 ### open cmd utility (powershell and terminal didn't work for me)
 windows button -> cmd
@@ -79,31 +79,31 @@ the index.tsx file will contain all of the elements for the front end UI
 you'll want to add a few pieces to the file which we'll use later:
 
 ### how to handle the data pipeline on the backend
-generateData will breakdown the metadata so that it is visible to the front end elements
-  const generateData = (data) => {
-    // If the data isn't filled in, then use these default properties.
-    console.log({data})
-    if (JSON.stringify(data)=="{}" || !data) {
-      return ([]); //create a simple lookup table for "missing data" value
-    } else { 
+	generateData will breakdown the metadata so that it is visible to the front end elements
+	  const generateData = (data) => {
+	    // If the data isn't filled in, then use these default properties.
+	    console.log({data})
+	    if (JSON.stringify(data)=="{}" || !data) {
+	      return ([]); //create a simple lookup table for "missing data" value
+	    } else { 
 
-    // original Data without an if function Beginning - this is where the original generateDate function started
-    // This maps all "items" in the fields section of the incoming model (See model example at the bottom)
-    return data?.fields[0][0].fields.map((item) => {      
-      item.primary = item.name;
-      item.value = item.name;
-      return item 
-    });
+	    // original Data without an if function Beginning - this is where the original generateDate function started
+	    // This maps all "items" in the fields section of the incoming model (See model example at the bottom)
+	    return data?.fields[0][0].fields.map((item) => {      
+	      item.primary = item.name;
+	      item.value = item.name;
+	      return item 
+	    });
 
 ### how to handle the compenent data.
-The handleFieldSelect function takes the values from the front end and inserts them into the configuration model
-  const handleFieldSelect = (key) => (_, newValue) => {
-    const newModel = { ...model };
-    const { Configuration } = newModel;
-    console.log('handleFieldSelect', { newValue, fieldToEdit: Configuration[key], key })
-    Configuration[key] = newValue;
-    handleUpdateModel(newModel);
-  };
+	The handleFieldSelect function takes the values from the front end and inserts them into the configuration model
+	  const handleFieldSelect = (key) => (_, newValue) => {
+	    const newModel = { ...model };
+	    const { Configuration } = newModel;
+	    console.log('handleFieldSelect', { newValue, fieldToEdit: Configuration[key], key })
+	    Configuration[key] = newValue;
+	    handleUpdateModel(newModel);
+	  };
 
 
 
