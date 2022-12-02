@@ -1,63 +1,110 @@
-# AYX_Platform_SDK
+# Table of Contents
+- [Install Prerequisites](https://github.com/jarrodthuener/AYX_Platform_SDK/edit/main/README.md#install-prerequisites)
+- [Create an Environment](https://github.com/jarrodthuener/AYX_Platform_SDK/edit/main/README.md#create-environment)
+	- [Create using python venv](https://github.com/jarrodthuener/AYX_Platform_SDK/edit/main/README.md#create-using-python-venv)
+	- [Create using miniconda](https://github.com/jarrodthuener/AYX_Platform_SDK/edit/main/README.md#create-using-miniconda)
+- [Install SDK and CLI](https://github.com/jarrodthuener/AYX_Platform_SDK/edit/main/README.md#install-sdk-and-cli)
+- [Create a Workspace](https://github.com/jarrodthuener/AYX_Platform_SDK/edit/main/README.md#create-workspace)
+	- [Create a Tool Plugin](https://github.com/jarrodthuener/AYX_Platform_SDK/edit/main/README.md#create-a-tool-plugin)
+	- [Customize Tool UI](https://github.com/jarrodthuener/AYX_Platform_SDK/edit/main/README.md#customize-tool-ui)
+- [Build YXI](https://github.com/jarrodthuener/AYX_Platform_SDK/edit/main/README.md#build-yxi)
 
-## install prerequisites
-	Designer 2021.4+
-	Python 3.8.5
-		pip is included
-	node version 12+
-	git
-	
-## Setup folders for environments / workspace
-### Create a folder structure somewhere:
-	** might want to keep workspaces contained within each environment
-	PlatformSDK
-		yourFirstEnvironment_venv
-			workspace1
-			workspace2
-			workspace3
-		secondEnvironment_venv
-			workspace1
-			workspace2
+# Install Prerequisites
+```
+Designer 2021.4+
+Python 3.8.5
+	pip is included
+node version 12+
+git
+```
 
-### open cmd utility (powershell and terminal didn't work for me)
+# Create Environment
+This will likely only be done a couple of times. While you can reuse a single environment for several packages of tools, I sometimes to prefer a fresh environment for each. Some prefer to deal with a single environment for managing the dependent packages. Each tool package will be separated by their own workspace which may contain several tools. Note - you can place several packages into the same tool palette category.
+
+There are two ways to create an environment: 1) through python venv and 2) miniconda. I think the python method (which I'll show first) is easier to imagine and organize, but choose whichever one is more comfortable for you.
+
+## Create using python venv
+### Setup folders for environments / workspace
+Manually create the folder structure you'd like to use to organize the projects. I like to keep workspaces contained within each environment. In this case, I created a home folder "PlatformSDK" on my C:\ Drive.
+```
+PlatformSDK
+	yourFirstEnvironment_venv
+		workspace1
+		workspace2
+		workspace3
+	secondEnvironment_venv
+		workspace1
+		workspace2
+```
+In the example above, my environment root path is 
+```
+C:\PlatformSDK\yourFirstEnvironment_venv
+```
+
+### Create the virtual environment (venv) 
+Open cmd utility (powershell and terminal didn't work for me)
+```
 windows button -> cmd
+```
 
-### set path:
-	CD C:\Program Files\Alteryx\bin\Miniconda3
+Change path to Alteryx's Miniconda3 folder so we can access the python.exe:
+```
+CD C:\Program Files\Alteryx\bin\Miniconda3
+```
 
+Create the virtual environment. In this case, we'll create a venv called "venv_1_0_2" in our base folder "C:\PlatformSDK"
+```
+python -m venv C:\PlatformSDK\venv_1_0_2
+```
 
-### <Create Virtual Environment>
-	python -m venv [your full path to the environment you want to create]
-	python -m venv C:\PlatformSDK\venv_1_0_2
+navigate to the newly created venv Directory
+```
+CD C:\PlatformSDK\venv_1_0_2
+```
 
-### CD to venv Directory
-	CD C:\PlatformSDK\venv_1_0_2
-	
-### Activate
-	.\scripts\activate
-
-	environment takes the name of the folder and will appear in parenthesis
-
-	**current directory = C:\PlatformSDK\venv_1_0_2**
-
-## Start SDK Quickstart
-
-### install CLI
-	pip install ayx-plugin-cli
-
-### test CLI 
-	ayx_plugin_cli version
-		** note the dashes become underscores
+Activate the environment
+```
+.\scripts\activate
+```
+Notice that the environment takes the name of the folder and will appear in parenthesis and we are still in our venv folder:
+```
+(venv_1_0_1) C:\PlatformSDK\venv_1_0_2>
+```
 
 
+# Install SDK and CLI
+These instructions can be found at the [Platform SDK Quickstart Guide](https://help.alteryx.com/developer-help/platform-sdk-quickstart-guide)
 
-### install AYX Python SDK
-	scripts\pip install ayx-python-sdk
-	
-everything above is for setting up venv and CLIs (command line interface)
+### Install CLI
+Use the following commance while in your active virtual environment:
+```
+pip install ayx-plugin-cli
+```
+[ayx-plugin-cli overview](https://help.alteryx.com/developer-help/ayx-plugin-cli-overview)
 
-## Create workspace
-	create and enter workspace folder:
+test CLI 
+```
+ayx_plugin_cli version
+```
+** note the dashes become underscores
+
+### Install AYX Python SDK
+Use the following commance while in your active virtual environment: 
+```
+pip install ayx-python-sdk
+```
+
+Check the version
+```
+ayx_python_sdk version
+```
+
+* These need to be installed for each environment created 
+
+
+# Create workspace
+
+create and enter workspace folder:
 		mkdir ayx_py_sample
 		cd ayx_py_sample
 
@@ -71,6 +118,7 @@ https://alteryx.github.io/ayx-python-sdk/getting_started.html#create-the-ayx-plu
 	ayx_plugin_cli create-ayx-plugin
 		Tool Name: Sample Tool
 		Tool Type: single-input-single-output
+			input, multiple-inputs, multiple-outputs, output, and single-input-single-output
 		Description: Sample Python Tool
 		Tool Version: 1.0
 
