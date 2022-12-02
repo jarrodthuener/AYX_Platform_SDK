@@ -122,7 +122,7 @@ https://alteryx.github.io/ayx-python-sdk/getting_started.html#create-the-ayx-plu
 	ayx_plugin_cli create-ayx-plugin
 		Tool Name: Sample Tool
 		Tool Type: single-input-single-output
-			input, multiple-inputs, multiple-outputs, output, and single-input-single-output
+			input, multiple-inputs, multiple-outputs, optional, output, single-input-single-output, multi-connection-input-anchor
 		Description: Sample Python Tool
 		Tool Version: 1.0
 
