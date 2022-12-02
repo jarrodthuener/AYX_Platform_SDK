@@ -23,10 +23,10 @@
 windows button -> cmd
 
 ### set path:
-C:\Program Files\Alteryx\bin\Miniconda3
+	CD C:\Program Files\Alteryx\bin\Miniconda3
 
 
-<Create Virtual Environment>
+### <Create Virtual Environment>
 	python -m venv [your full path to the environment you want to create]
 	python -m venv C:\PlatformSDK\venv_1_0_2
 
@@ -57,9 +57,9 @@ C:\Program Files\Alteryx\bin\Miniconda3
 everything above is for setting up venv and CLIs (command line interface)
 
 ## Create workspace
-create and enter workspace folder
-	mkdir ayx_py_sample
-	cd ayx_py_sample
+	create and enter workspace folder:
+		mkdir ayx_py_sample
+		cd ayx_py_sample
 
 ### create a workspace
 	ayx_plugin_cli sdk-workspace-init
@@ -142,3 +142,7 @@ On_record_batch section:
 		
 logs for the tool when installed as user are here:
 	C:\Users\jarro\AppData\Local\Alteryx
+
+### install the tool
+	ayx_plugin_cli designer-install
+			      
