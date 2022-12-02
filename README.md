@@ -18,10 +18,12 @@ node version 12+
 git
 ```
 
+
 # Create Environment
 This will likely only be done a couple of times. While you can reuse a single environment for several packages of tools, I sometimes to prefer a fresh environment for each. Some prefer to deal with a single environment for managing the dependent packages. Each tool package will be separated by their own workspace which may contain several tools. Note - you can place several packages into the same tool palette category.
 
 There are two ways to create an environment: 1) through python venv and 2) miniconda. I think the python method (which I'll show first) is easier to imagine and organize, but choose whichever one is more comfortable for you.
+
 
 ## Create using python venv
 ### Setup folders for environments / workspace
@@ -88,6 +90,7 @@ ayx_plugin_cli version
 ```
 ** note the dashes become underscores
 
+
 ### Install AYX Python SDK
 Use the following commance while in your active virtual environment: 
 ```
@@ -107,6 +110,7 @@ ayx_python_sdk version
 create and enter workspace folder:
 		mkdir ayx_py_sample
 		cd ayx_py_sample
+
 
 ### create a workspace
 	ayx_plugin_cli sdk-workspace-init
