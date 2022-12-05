@@ -108,15 +108,15 @@ ayx_python_sdk version
 # Create workspace
 
 ### create and enter workspace folder:
-'''
+```
 mkdir ayx_py_sample
 cd ayx_py_sample
-'''
+```
 
 ### create a workspace
-'''
+```
 ayx_plugin_cli sdk-workspace-init
-'''
+```
 
 https://alteryx.github.io/ayx-python-sdk/getting_started.html#create-the-ayx-plugin-workspace
 
