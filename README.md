@@ -129,6 +129,12 @@ https://alteryx.github.io/ayx-python-sdk/getting_started.html#create-the-ayx-plu
 		Description: Sample Python Tool
 		Tool Version: 1.0
 
+### navigate to ui\{tool name folder}
+Run the following function to update the @alteryx/ui to the most recent version:
+```
+npm install @alteryx/ui --upgrade
+```
+
 ### navigate to ui\{tool name folder}\src
 the index.tsx file will contain all of the elements for the front end UI
 you'll want to add a few pieces to the file which we'll use later:
