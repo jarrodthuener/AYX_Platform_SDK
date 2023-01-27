@@ -134,7 +134,7 @@ the index.tsx file will contain all of the elements for the front end UI
 you'll want to add a few pieces to the file which we'll use later:
 
 ### how to handle the data pipeline on the backend
-generateData will breakdown the metadata so that it is visible to the front end elements
+	generateData will breakdown the metadata so that it is visible to the front end elements
 	  const generateData = (data) => {
 	    // If the data isn't filled in, then use these default properties.
 	    console.log({data})
