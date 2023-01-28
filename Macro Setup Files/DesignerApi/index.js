@@ -2,7 +2,6 @@
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -43,27 +42,19 @@ const valueToConfig = (arr) => {
   return {config};
 };
 
-
 const handleValueToConfig = (data) =>{
   if (data.Configuration === null || JSON.stringify(data.Configuration) ==='{}'){
-    console.log("handleValueToConfig - True - data", {data});
     return data;
   } else {
-    // console.log(data)
-    // const newModel = data 
     const newModel = {...data};
-    console.log("handleValueToConfig - False - nM.C.V", newModel.Configuration.Value);
     const newConfig = valueToConfig(newModel.Configuration.Value)
     newModel.Configuration = newConfig.config
-    console.log("updatedmodel", newModel);
     return newModel;
-}
+  }
 };
 
 
-
 const DesignerApi = props => {
-  // console.log("DesignerAPI");
   const {
     messages = {},
     defaultConfig = {}
@@ -78,10 +69,7 @@ const DesignerApi = props => {
   const [appContext, updateAppContext] = (0, _react.useState)(messageBroker.ayxAppContext);
 
   const handleUpdateModel = updatedData => {
-    // console.log({updatedData});
     updateModel(updatedData);
-    console.log({updatedData});
-    // console.log({messageBroker});
     messageBroker.model = updatedData;
     messageBroker instanceof _MicroAppMessageApi.default ? messageBroker.sendMessage(_constants.SUBSCRIPTION_EVENTS.MODEL_UPDATED, updatedData) : window.Alteryx.model = updatedData;
   };
@@ -93,15 +81,11 @@ const DesignerApi = props => {
     };
 
     const receiveModel = data => {
-      console.log("DesignerAPI - Receive Model before update",{model, data});
-      updateModel((0, _deepmerge.default)(model, handleValueToConfig(data))); //added this valueToConfig@ 3:36p 1/27
-      console.log("DesignerAPI - Receive Model",{model, data});
+      updateModel((0, _deepmerge.default)(model, handleValueToConfig(data)));
     };
 
     messageBroker.subscribe(_constants.SUBSCRIPTION_EVENTS.MODEL_UPDATED, receiveModel);
     messageBroker.subscribe(_constants.SUBSCRIPTION_EVENTS.AYX_APP_CONTEXT_UPDATED, receiveAppContext);
-    console.log("DesignerAPI - message broker model",messageBroker.model);
-    
     return function cleanUp() {
       handleUpdateModel(messageBroker.model);
     };
@@ -122,11 +106,9 @@ const DesignerApi = props => {
     theme: productTheme,
     locale
   };
-  console.log("DesignerAPI - end of script",props.children,appPropsToSpread,_Context.default.Provider);
   return /*#__PURE__*/_react.default.createElement(_Context.default.Provider, contextProps, /*#__PURE__*/_react.default.cloneElement(props.children, { ...appPropsToSpread
   }));
 };
 
 var _default = DesignerApi;
-console.log("End of DesignerAPI: _default",{_default});
 exports.default = _default;

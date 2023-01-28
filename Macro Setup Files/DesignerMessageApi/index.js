@@ -35,7 +35,6 @@ function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflec
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 const valueToConfig = (arr) => {
-  console.log({arr})
   let config = {};
   arr.forEach(o => {
     if (o === null){
@@ -49,37 +48,28 @@ const valueToConfig = (arr) => {
 // this goes at the beginning of the interaction with the script
 const handleValueToConfig = (data) =>{
   if (data.Configuration.Configuration === null){
-    console.log("data is null, so it is being skipped")
     return data
   } else {
-    console.log("handleValueToConfig - newConfigModel",data)
-    // const newModel = data 
-
     const newModel = {...data};
-    console.log(newModel.Configuration.Configuration)
     const newConfig = valueToConfig(newModel.Configuration.Configuration.Value)
-    // newModel.Configuration = 
     newModel.Configuration.Configuration = newConfig.config
-    console.log("updatedmodel", newModel)
     return newModel
-}};
+  }
+};
 
 
 let DesignerMessageApi = /*#__PURE__*/function (_MessageApiBase) {
   (0, _inherits2.default)(DesignerMessageApi, _MessageApiBase);
-  console.log("DesignerMessageAPI - MessageAPIBase",_MessageApiBase);
 
   var _super = _createSuper(DesignerMessageApi);
 
   function DesignerMessageApi(ctx) {
     var _this;
-    console.log("DesignerMessageAPI - ctx",ctx);
 
     (0, _classCallCheck2.default)(this, DesignerMessageApi);
     _this = _super.call(this, ctx);
 
     _this.sendMessage = (type, payload) => {
-      console.log("DesignerMessageAPI - sendMessage",{type, payload},_this.context);
       return callback.JsEvent(type, payload, _this.context);
     };
 
@@ -132,8 +122,6 @@ let DesignerMessageApi = /*#__PURE__*/function (_MessageApiBase) {
         Annotation
       } = currentToolConfiguration.Configuration.Configuration || _this.model;
       const [decryptedSecrets, cleanToolConfiguration] = await _this.cleanConfigAndDecryptSecrets(currentToolConfiguration);
-      console.log("DesignerMessageAPI - generageConfigShape",{currentToolConfiguration},_this.model.Configuration);
-
       return {
         Configuration: cleanToolConfiguration.Configuration.Configuration || _this.model.Configuration,
         Secrets: decryptedSecrets || _this.model.Secrets,
@@ -188,21 +176,16 @@ let DesignerMessageApi = /*#__PURE__*/function (_MessageApiBase) {
     _this.context.Gui = {
       SetConfiguration: async currentToolConfiguration => {
         if (_this.subscriptions && _this.subscriptions.has('MODEL_UPDATED')) {
-          console.log("DesignerMessageAPI - SetConfig - currentToolConf", {currentToolConfiguration});
           _this.model = await _this.generateConfigShape(currentToolConfiguration);
-
 
           _this.subscriptions.get('MODEL_UPDATED')(_this.model);
 
           _this.context.model = _this.model;
         }
-        console.log("designerMessageAPI SetConfiguration");
+
         let newConfigModel = {...currentToolConfiguration}
         newConfigModel = handleValueToConfig(newConfigModel)
-        console.log("designerMessageApi",{newConfigModel})
         currentToolConfiguration = newConfigModel
-        console.log(currentToolConfiguration)
-        
 
         _this.context.JsEvent(JSON.stringify({
           Event: _constants.MESSAGE_TYPES.SET_CONFIGURATION
@@ -211,8 +194,6 @@ let DesignerMessageApi = /*#__PURE__*/function (_MessageApiBase) {
       GetConfiguration: () => {
         const keys = Object.keys(_this.model.Secrets);
         Promise.all(keys.map(_this.encryptSecrets)).then(() => {
-          console.log("designerMessageAPI GetConfiguration",_this.model.Configuration);
-
           const payload = {
             Configuration: {
               Configuration: { ..._this.model.Configuration,
@@ -224,18 +205,15 @@ let DesignerMessageApi = /*#__PURE__*/function (_MessageApiBase) {
           };
 
           _this.sendMessage(_constants.MESSAGE_TYPES.GET_CONFIGURATION, payload);
-          console.log("designerMessageAPI GetConfiguration",{payload});
         });
       },
       Callbacks: {}
     };
-    console.log("DesignerMessageAPI - end of script", {_this});
     return _this;
   }
-  
+
   return DesignerMessageApi;
 }(_MessageApiBase2.default);
 
 var _default = DesignerMessageApi;
-console.log("End of DesignerMessageAPI: _default",{_default});
 exports.default = _default;
